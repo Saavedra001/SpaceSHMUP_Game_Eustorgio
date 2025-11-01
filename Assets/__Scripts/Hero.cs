@@ -19,9 +19,13 @@ public class Hero : MonoBehaviour
     [SerializeField]
     private float _shieldLevel = 1;
     // public float shieldLevel = 1;
-    
+
     [Tooltip("This field holds a reference to the last triggering GameObject")]
     private GameObject lastTriggerGo = null;
+    //declare a new delegate type WeaponFireDelegate
+    public delegate void WeaponFireDelegate();
+    //create a WeaponFireDelegate even named fireEvent
+    public event WeaponFireDelegate fireEvent;
 
     void Awake()
     {
@@ -33,6 +37,7 @@ public class Hero : MonoBehaviour
         {
             Debug.LogError("Hero.Awake() - Attempted to assign secound Hero.S!");
         }
+        fireEvent += TempFire;
     }
 
     // Update is called once per frame
@@ -52,19 +57,30 @@ public class Hero : MonoBehaviour
         transform.rotation = Quaternion.Euler(vAxis * pitchMult, hAxis * rollMult, 0);
 
         //Allow the ship to fire
-        if (Input.GetKeyDown(KeyCode.Space))
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     TempFire();
+        // }
+
+        //user the fireEvent to fire Weapons whe the Spacebar is pressed ddd
+        if(Input.GetAxis("Jump") == 1 && fireEvent != null)
         {
-            TempFire();
+            fireEvent();
         }
 
     }
 
-    void TempFire()
-    {
+
+        void TempFire(){
         GameObject projGO = Instantiate<GameObject>(projectilePrefab);
         projGO.transform.position = transform.position;
         Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
-        rigidB.velocity = Vector3.up * projectileSpeed;
+        // rigidB.velocity = Vector3.up * projectileSpeed;
+
+        ProjectileHero proj = projGO.GetComponent <ProjectileHero>();
+        proj.type = eWeaponType.blaster;
+        float tSpeed = Main.GET_WEAPON_DEFINITION(proj.type).velocity;
+        rigidB.velocity = Vector3.up * tSpeed;
     }
 
     void OnTriggerEnter(Collider other)
