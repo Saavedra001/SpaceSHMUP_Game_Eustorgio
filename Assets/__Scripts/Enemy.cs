@@ -11,8 +11,9 @@ public class Enemy : MonoBehaviour
     public float fireRate = 0.3f; //Secounds/shot (Unused)
     public float health = 10; //Damge needed to destroy this enemy
     public int score = 100; //Points earned for destroying this
+    protected BoundsCheck bndCheck;
 
-    private BoundsCheck bndCheck;
+    // private BoundsCheck bndCheck;
 
     void Awake()
     {
