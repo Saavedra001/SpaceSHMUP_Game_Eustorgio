@@ -45,6 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c769e572622af46946b5a7554b08bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _type: 1
+  def:
+    type: 1
+    letter: B
+    powerUpColor: {r: 1, g: 1, b: 1, a: 1}
+    weaponModelPrefab: {fileID: 919132149155446097, guid: 0522e2d6add5631469273543744ebf7f,
+      type: 3}
+    projectilePrefab: {fileID: 1730110488752355455, guid: 5513f5799ec48164a8a3a26334e0edd3,
+      type: 3}
+    projectileColor: {r: 1, g: 1, b: 1, a: 1}
+    damageOnHit: 0
+    damgerPerSec: 0
+    delayBetweenShots: 0.2
+    velocity: 50
+  nextShotTime: 0
 --- !u!1 &6164693149496324362
 GameObject:
   m_ObjectHideFlags: 0

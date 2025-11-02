@@ -39,7 +39,7 @@ public class WeaponDefinition
     [Tooltip("Color of the Projectile that is fired")]
     public Color projectileColor = Color.white;
     [Tooltip("Damage caused when a single Projectile hits an Enemy")]
-    public float damgeOnHit = 0;
+    public float damageOnHit = 0;
     [Tooltip("Damage caused per second by the Laser [Not Impolemented]")]
     public float damgerPerSec = 0;
     [Tooltip("Seconds to delay between shots")]

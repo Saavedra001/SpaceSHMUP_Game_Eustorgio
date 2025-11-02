@@ -15,7 +15,13 @@ public class Main : MonoBehaviour
     public float enemySpawnPerSecond = 0.5f; //# Enemies spawned/second
     public float enemyInsetDefault = 1.5f; // Inset from the sides
     public float gameRestartDelay = 2;
+    public GameObject prefabPowerUp;
     public WeaponDefinition[] weaponDefinitions;
+    public eWeaponType[] powerUpFrequency = new eWeaponType[]
+    {
+        eWeaponType.blaster, eWeaponType.blaster,
+        eWeaponType.spread, eWeaponType.shield
+    };
 
     private BoundsCheck bndCheck;
 
@@ -93,9 +99,31 @@ public class Main : MonoBehaviour
         {
             return (WEAP_DICT[wt]);
         }
-        
+
         //If no entry of the correct type exist in WEAP_DICT, return a new 
         //WeaponDefinition with a type of eWeaponType.none(the defualt value)
         return (new WeaponDefinition());
+    }
+
+    //called by an Enemy ship whenever it is destroyed. It sometimes creates 
+    // a PowerUp in place of the destroyed ship
+
+    static public void SHIP_DESTROYED(Enemy e)
+    {
+        if (Random.value <= e.powerUpDropChance)
+        {
+            //chose a PowerUp from the possibilites in powerUpFrequency
+            int ndx = Random.Range(0, S.powerUpFrequency.Length);
+            eWeaponType pUpType = S.powerUpFrequency[ndx];
+
+            //Spawn a PowerUp
+            GameObject go = Instantiate<GameObject>(S.prefabPowerUp);
+            PowerUp pUp = go.GetComponent<PowerUp>();
+            //Set it to the proper WeaponType
+            pUp.SetType(pUpType);
+
+            //Set it to the position of the destroyed ship
+            pUp.transform.position = e.transform.position;
+        }
     }
 }
