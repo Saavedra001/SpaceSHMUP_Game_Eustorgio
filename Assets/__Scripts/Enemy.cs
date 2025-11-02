@@ -91,11 +91,13 @@ public class Enemy : MonoBehaviour
                 health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
                 if (health <= 0)
                 {
+                    // play death sound here too
                     //Tell Main that this ship was destroyed
                     if (!calledShipDestroyed)
                     {
                         calledShipDestroyed = true;
                         Main.SHIP_DESTROYED(this);
+                        Main.PlayEnemyDeathSound();
                     }
                     //destroy this enemy
                     Destroy(this.gameObject);

@@ -111,6 +111,9 @@ public class Enemy_4 : Enemy
                 {
                     Main.SHIP_DESTROYED(this);
                     calledShipDestroyed = true;
+
+                    //sound for boss on death
+                    Main.PlayEnemyDeathSound();
                 }
 
 

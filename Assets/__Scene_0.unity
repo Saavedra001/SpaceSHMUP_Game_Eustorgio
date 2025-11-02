@@ -789,6 +789,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67cb398b05fad5444a568a8028b53512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyDeathSfx: {fileID: 8300000, guid: e96f732d569bc634a811dc33bd183860, type: 3}
+  enemyDeathVolume: 0.8
+  heroDeathSfx: {fileID: 8300000, guid: 0eed60a98ed45ff4b8d5aa2c40e024f3, type: 3}
+  heroDeathVolume: 1
+  enemyHitSfx: {fileID: 8300000, guid: a326e72b8263efb4aa27727be598a923, type: 3}
+  enemyHitVolume: 0.6
+  pUpBlaster: {fileID: 8300000, guid: d8df95139f374264aa5d61bf6633add3, type: 3}
+  pUpSpread: {fileID: 8300000, guid: a754dfeaf4f2c384490191502e744246, type: 3}
+  pUpShield: {fileID: 8300000, guid: 5f3b3a08e2e8fc84a849cee237dd31c8, type: 3}
+  pUpPickupVolume: 0.9
   spawnEnemies: 1
   prefabEnemies:
   - {fileID: 3597783053511025658, guid: cf27b07505c9bfc4d8392d571c67963e, type: 3}

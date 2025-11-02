@@ -48,6 +48,7 @@ public class BlinkColorOnHit : MonoBehaviour
                 return; // don't show damage if this is off screen
             }
             SetColors();
+            Main.PlayEnemyHitSound();
         }
     }
 

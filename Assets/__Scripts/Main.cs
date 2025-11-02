@@ -8,6 +8,22 @@ public class Main : MonoBehaviour
     static private Main S; //A private singleton for Main
     static private Dictionary<eWeaponType, WeaponDefinition> WEAP_DICT;
 
+    [Header("Audio")]
+    public AudioClip enemyDeathSfx;
+    [Range(0f, 1f)] public float enemyDeathVolume = 0.8f;
+
+    public AudioClip heroDeathSfx;
+    [Range(0, 1f)] public float heroDeathVolume = 1f;
+
+    public AudioClip enemyHitSfx;
+    [Range(0f, 1f)] public float enemyHitVolume = 0.6f;
+
+    [Header("Audio - PowerUp Pickup")]
+    public AudioClip pUpBlaster;
+    public AudioClip pUpSpread;
+    public AudioClip pUpShield;
+    [Range(0f, 1f)] public float pUpPickupVolume = 0.9f;
+
 
     [Header("Inscribed")]
     public bool spawnEnemies = true;
@@ -25,9 +41,18 @@ public class Main : MonoBehaviour
 
     private BoundsCheck bndCheck;
 
+    AudioSource _audio;
+
     void Awake()
     {
         S = this;
+
+        //audio
+        _audio = GetComponent<AudioSource>();
+        if (_audio == null) _audio = gameObject.AddComponent<AudioSource>();
+        _audio.playOnAwake = false;
+        _audio.spatialBlend = 0f;
+
         //Set bndCheck to reference the BoundsCheck component on this
         //GameObject
         bndCheck = GetComponent<BoundsCheck>();
@@ -37,11 +62,12 @@ public class Main : MonoBehaviour
 
         //A generic Dictionary with eWeaponType as the key
         WEAP_DICT = new Dictionary<eWeaponType, WeaponDefinition>();
-        foreach(WeaponDefinition def in weaponDefinitions)
+        foreach (WeaponDefinition def in weaponDefinitions)
         {
             WEAP_DICT[def.type] = def;
         }
     }
+
 
     public void SpawnEnemy()
     {
@@ -125,5 +151,56 @@ public class Main : MonoBehaviour
             //Set it to the position of the destroyed ship
             pUp.transform.position = e.transform.position;
         }
+    }
+
+    private void PlayEnemyDeathSFX()
+    {
+        if(enemyDeathSfx != null)
+        {
+            _audio.PlayOneShot(enemyDeathSfx, enemyDeathVolume);
+        }
+    }
+
+    public static void PlayEnemyDeathSound()
+    {
+        if (S != null)
+        {
+            S.PlayEnemyDeathSFX();
+        }
+    }
+
+    public static void PlayEnemyHitSound()
+    {
+        if (S != null && S.enemyHitSfx != null)
+        {
+            S._audio.PlayOneShot(S.enemyHitSfx, S.enemyHitVolume);
+        }
+    }
+
+    public static void PlayerPowerUpPickup(eWeaponType wt)
+    {
+        if (S == null) return;
+        AudioClip clip = null;
+        switch (wt)
+        {
+            case eWeaponType.blaster: clip = S.pUpBlaster; break;
+            case eWeaponType.spread: clip = S.pUpSpread; break;
+            case eWeaponType.shield: clip = S.pUpShield; break;
+            default: break;
+        }
+        if (clip != null) S._audio.PlayOneShot(clip, S.pUpPickupVolume);
+    }
+
+    public void PlayerHeroDeathSfx()
+    {
+        if (heroDeathSfx != null)
+        {
+            _audio.PlayOneShot(heroDeathSfx, heroDeathVolume);
+        }
+    }
+    
+    public static void PlayerHeroDeathSound()
+    {
+        if (S != null) S.PlayerHeroDeathSfx();
     }
 }

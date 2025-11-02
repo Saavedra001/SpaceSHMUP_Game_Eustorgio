@@ -144,8 +144,11 @@ public class Hero : MonoBehaviour
                     weapons[0].SetType(pUp.type);
                 }
                 break;
-            //Leave this switch block empty for now
+                //Leave this switch block empty for now
         }
+        //plays sound for the power ups
+        Main.PlayerPowerUpPickup(pUp.type);
+        
         pUp.AbsorbedBy(this.gameObject);
     }
     
@@ -158,6 +161,7 @@ public class Hero : MonoBehaviour
             //if the shield is going to be set to less than zero,...
             if (value < 0)
             {
+                Main.PlayerHeroDeathSound();
                 Destroy(this.gameObject);//Destroy the Hero
                 Main.HERO_DIED();
             }
